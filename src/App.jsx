@@ -1,18 +1,29 @@
-import './App.css';
+import './App.scss';
 import React from 'react';
-import { Routes, Route } from 'react-router-dom';
+import { Route, Routes, Link} from "react-router-dom";
+import Login from "./comp/login/Login";
+import Dashboard from './comp/dashboard/Dashboard';
 import Register from './comp/register/Register';
 import Layout from './comp/layout/Layout';
+import Reset from './comp/reset/Reset';
 
 function App() {
 
- 
    return (
-    <div className="App">
-       <Routes>
-          <Route path='/' element={<Layout/>} />
-       </Routes>
-    </div>
+
+      <div className="App">
+
+         <Routes >
+            <Route path="/" element={<Layout/>} >
+               <Route index element={<Dashboard />} />
+               <Route path="login" element={<Login />} />
+               <Route path='register' element={<Register/>} /> 
+               <Route path='reset' element={<Reset/>} />
+            </Route>
+         </Routes>
+
+      </div>
+   
    );
 }
 

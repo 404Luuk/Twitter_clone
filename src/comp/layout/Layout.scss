@@ -1,0 +1,41 @@
+.cur_user {
+
+}
+Link {
+   padding: 10px 5px;
+}
+
+nav {
+   display: flex;
+   column-gap: 2rem;
+   justify-content: flex-end;
+   align-items: center;
+   padding: 0 30px ;
+
+   background-color: rgb(121, 165, 246);
+   height: 100px;
+
+   .cur_user {
+      border: 1px solid black;
+      padding: 10px 15px;
+      // position: absolute;
+      // right: 30px;
+   }
+
+   h1 {
+      position: absolute;
+      left: 40px;
+      margin: 0;
+   }
+   
+}
+
+
+
+footer {
+   position: absolute;
+   bottom: 0;
+   width: 100vw;
+   background-color: rgb(121, 165, 246);
+
+}
