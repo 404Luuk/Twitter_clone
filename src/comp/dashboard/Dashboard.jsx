@@ -10,8 +10,9 @@ const Dashboard = () => {
       <section>
          <div className="col">
             <div className="row">
-               <h2>Welcome </h2>
+               <h2>Welcome to Twitter2.0</h2>
                <TweetBox />
+               <br />
                <TweetFeed/>
             </div>
          </div>

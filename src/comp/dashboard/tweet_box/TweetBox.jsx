@@ -1,45 +1,55 @@
 import React, {useState} from "react";
 import { getAuth } from "firebase/auth";
-import { db } from "../../../firebase_config";
-import { addDoc, collection } from "firebase/firestore";
+import { db, getUserDetails } from "../../../firebase_config";
+import { addDoc, collection, getDoc, getDocs, query, where } from "firebase/firestore";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import Dashboard from "../Dashboard";
 
 const TweetBox = () => {
 
    const dbRef = collection(db, 'tweets');
-   const [tweet, setTweet] = useState('');
-   const auth = getAuth();
-   const user = auth.currentUser;
-   const nav = useNavigate();
+   const userRef = collection(db, "users"); 
 
-   const Create = async(e) => {
+   const [tweet, setTweet] = useState('');
+   
+   const user = getAuth().currentUser;
+
+   const HandleSubmit = (e) => {
+      console.log("handle submit");
       e.preventDefault();
-      if(user !== null) {
-         if(tweet !== '') {
-            try {
-               const time = new Date();
-               await addDoc(dbRef, {
-                  message: tweet,
-                  tweet_uid: user.uid ,
-                  created_at: time,
-               });
-               nav('/');
-            }
-            catch(e) {
-               alert(e.message);
-               console.error(e);
-            }
+
+      if(user != null) {
+         if(tweet != "") {
+            Create();
+            setTweet("");
          }
-         else { alert('message cannot be NULL') }
-         }
-      else { alert('You need to be logged in'); }
+         else {alert("msg cannot be NULL");}
+      }else {alert("user cannot be NULL");}
+   }
+
+   const Create = async() => {  
+          
+      try {
+         const time = new Date();
+         await addDoc(dbRef, {
+            message: tweet,
+            tweet_uid: user.uid,
+            // tweet_user: getUserDetails(user.uid),
+            created_at: time,
+         });
+         
+      }
+      catch(e) {
+         alert(e.message);
+         console.error(e);
+      }
    }
 
 
    return (
       <div className="tweet_box">
-         <form onSubmit={(e)=>Create(e)} >
+         <form onSubmit={(e)=>HandleSubmit(e)} >
             <label htmlFor="tweet">Whats on your mind?</label> <br />
             <input
                id="tweet"

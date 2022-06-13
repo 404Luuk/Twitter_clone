@@ -1,17 +1,23 @@
 import React, {useEffect, useState} from "react";
 import { db } from "../../../firebase_config";
-import { getDocs, collection } from "firebase/firestore";
+import { getDocs, collection, where, query, getDoc } from "firebase/firestore";
+import { auth } from "../../../firebase_config";
+import Tweet from "./tweet/Tweet";
+import './Tweet_feed.scss'
+
 
 const TweetFeed = () => {
 
    const tweetRef = collection(db, "tweets");
+   const userRef  = collection(db, "users");
+
    const [Tweets, setTweets] = useState([]);
+   const [username, setUsername] = useState("");
 
 
    const getTweets = async () => {
       try {
          const tweetCollection = await getDocs(tweetRef);
-         console.log(tweetCollection);
          setTweets(tweetCollection.docs.map((doc)=>({ ...doc.data(), id: doc.id})));
       }
       catch(e) {
@@ -23,18 +29,17 @@ const TweetFeed = () => {
 
    useEffect(()=> {
       getTweets();
-   },[])
+   },[Tweets])
 
 
    return (
 
       Tweets?.map((tweet)=>{
+
          return (
-            <div className="tweet" key={tweet.id}>
-               <strong>{tweet.tweet_uid}</strong>
-               <p>{tweet.message}</p>
-            </div>
+            <Tweet tweet={tweet} />
          )
+
       })
    )
 }

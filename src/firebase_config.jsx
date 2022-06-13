@@ -1,17 +1,28 @@
 import { initializeApp } from "firebase/app";
-import { getFirestore, query, getDocs, collection, where, addDoc } from "firebase/firestore";
+import { getFirestore, query, getDocs, collection, where, addDoc, getDoc } from "firebase/firestore";
 import { GoogleAuthProvider, getAuth, signInWithPopup, signInWithEmailAndPassword, createUserWithEmailAndPassword, sendPasswordResetEmail, signOut, onAuthStateChanged } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
 
+// const firebaseConfig = {
+//   apiKey: "AIzaSyAn8D3rt6wdG5y9QomJ6-VVDirLqzB6pM4",
+//   authDomain: "hiking-api-e24fe.firebaseapp.com",
+//   projectId: "hiking-api-e24fe",
+//   storageBucket: "hiking-api-e24fe.appspot.com",
+//   messagingSenderId: "209960477137",
+//   appId: "1:209960477137:web:38e88624e02c1caf89c0f0",
+//   measurementId: "G-N1H0JB4CD2"
+// };
+
 const firebaseConfig = {
-  apiKey: "AIzaSyAn8D3rt6wdG5y9QomJ6-VVDirLqzB6pM4",
-  authDomain: "hiking-api-e24fe.firebaseapp.com",
-  projectId: "hiking-api-e24fe",
-  storageBucket: "hiking-api-e24fe.appspot.com",
-  messagingSenderId: "209960477137",
-  appId: "1:209960477137:web:38e88624e02c1caf89c0f0",
-  measurementId: "G-N1H0JB4CD2"
-};
+   apiKey: "AIzaSyCEKWjmNkv75rIVWxCxNl0KK_rdvvpmogY",
+   authDomain: "twitter-clone-5b244.firebaseapp.com",
+   projectId: "twitter-clone-5b244",
+   storageBucket: "twitter-clone-5b244.appspot.com",
+   messagingSenderId: "281041947016",
+   appId: "1:281041947016:web:ae824f0df50cc040ed523d",
+   measurementId: "G-3C9SRHEZRX"
+ };
+ 
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
@@ -39,7 +50,7 @@ const signInWithGoogle = async () => {
          await addDoc(dbRef, {
             signUpDate: date,
             uid: user.uid,
-            name: user.displayName,
+            displayName: user.displayName,
             authProvider: "google",
             email: user.email,
          });
@@ -71,7 +82,7 @@ const registerEmailPassword = async (name, email, password) => {
       await addDoc(dbRef, {
          signUpDate: date,
          uid: user.uid,
-         name,
+         displayName: name,
          authProvider: "local",
          email,
       });
@@ -81,6 +92,12 @@ const registerEmailPassword = async (name, email, password) => {
       alert(err.message);
    }
 }
+
+// const getUserDetails = async (uid) => {
+//    const q = query(dbRef, where("uid", "==", uid));
+//    const doc = await getDoc(q);
+//    return doc.displayName;
+// }
 
 const sendPassReset = async (email) => {
    try {
