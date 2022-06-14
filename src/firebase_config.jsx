@@ -1,17 +1,7 @@
 import { initializeApp } from "firebase/app";
-import { getFirestore, query, getDocs, collection, where, addDoc, getDoc } from "firebase/firestore";
+import { getFirestore, query, getDocs, collection, where, addDoc, getDoc , doc} from "firebase/firestore";
 import { GoogleAuthProvider, getAuth, signInWithPopup, signInWithEmailAndPassword, createUserWithEmailAndPassword, sendPasswordResetEmail, signOut, onAuthStateChanged } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
-
-// const firebaseConfig = {
-//   apiKey: "AIzaSyAn8D3rt6wdG5y9QomJ6-VVDirLqzB6pM4",
-//   authDomain: "hiking-api-e24fe.firebaseapp.com",
-//   projectId: "hiking-api-e24fe",
-//   storageBucket: "hiking-api-e24fe.appspot.com",
-//   messagingSenderId: "209960477137",
-//   appId: "1:209960477137:web:38e88624e02c1caf89c0f0",
-//   measurementId: "G-N1H0JB4CD2"
-// };
 
 const firebaseConfig = {
    apiKey: "AIzaSyCEKWjmNkv75rIVWxCxNl0KK_rdvvpmogY",
@@ -93,6 +83,26 @@ const registerEmailPassword = async (name, email, password) => {
    }
 }
 
+const getUserDetails = async(uid) => {
+
+   
+
+   try {
+
+      const q = query(dbRef, where("uid", "==", uid));
+      const ref = await getDocs(q);
+      
+      const docid = ref.map((r)=> {return r.id})
+
+      console.log(docid[0]);
+
+   }catch(e) {
+      console.log(e)
+   }
+
+}
+
+
 const sendPassReset = async (email) => {
    try {
       await sendPasswordResetEmail(email);
@@ -114,6 +124,7 @@ export {
    signInWithGoogle,
    logInEmailPassword,
    registerEmailPassword,
+   getUserDetails,
    sendPassReset,
    logOut,
 };

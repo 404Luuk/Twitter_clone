@@ -1,6 +1,5 @@
-import React, { useEffect, useState } from "react";
-import { useAuthState } from "react-firebase-hooks/auth";
-import { Link, useHistory, useNavigate } from "react-router-dom";
+import React, { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import {
   auth,
   logInEmailPassword,
@@ -44,12 +43,6 @@ function Register() {
    else {alert("password does not match");}
     
   };
-  
-  
-//   useEffect(() => {
-//     if (loading) return;
-//     if (user) history.replace("/dashboard");
-//   }, [user, loading]);
   
   
   return (

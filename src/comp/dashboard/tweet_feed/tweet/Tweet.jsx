@@ -1,4 +1,5 @@
-import React, {useEffect, useState} from "react";
+import React from "react";
+import { useEffect } from "react";
 
 const Tweet = (tweet) => {
    
@@ -6,7 +7,6 @@ const Tweet = (tweet) => {
       <div className="tweet" key={tweet.id}> 
       <strong>{tweet.tweet.tweet_user}</strong>
       <p>{tweet.tweet.message}</p>
-      <span></span>
       </div>
    );
 }

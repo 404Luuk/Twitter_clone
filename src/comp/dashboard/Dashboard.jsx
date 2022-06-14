@@ -30,10 +30,15 @@ const Dashboard = () => {
       <section>
          <div className="col">
             <div className="row">
-               <h2>Welcome to Twitter2.0</h2>
-               <TweetBox getTweets={getTweets} />
-               <br />
-               <TweetFeed Tweets={tweets} />
+               <div className="col">
+                  <h2>Welcome to Twitter2.0</h2>
+                  <TweetBox getTweets={getTweets} />
+               </div>
+               <div className="col">
+
+                  <br />
+                  <TweetFeed Tweets={tweets} />
+               </div>
             </div>
          </div>
       </section>

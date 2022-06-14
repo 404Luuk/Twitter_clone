@@ -2,3 +2,18 @@ section {
    min-height: 90vh;
    
 }
+
+.row {
+   display: flex;
+   justify-content: center;
+
+   .col {
+      width: 60%;
+      background-color: snow;
+
+      &:first-of-type {
+         width: 40%;
+         background-color: antiquewhite;
+      }
+   }
+}

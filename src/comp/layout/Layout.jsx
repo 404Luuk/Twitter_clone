@@ -36,7 +36,7 @@ const Layout = () => {
    return (
       <>
          <nav>
-            <h1>Twitter_clone</h1>
+            <h1>Cursed_Twitter</h1>
             
             <div className="auth_tab">
                { user ? (

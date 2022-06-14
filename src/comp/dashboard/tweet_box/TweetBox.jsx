@@ -3,13 +3,11 @@ import { getAuth } from "firebase/auth";
 import { db, getUserDetails } from "../../../firebase_config";
 import { addDoc, collection, getDoc, getDocs, query, where } from "firebase/firestore";
 import { useEffect } from "react";
-import { useNavigate } from "react-router-dom";
-import Dashboard from "../Dashboard";
 
 const TweetBox = ({getTweets}) => {
 
    const dbRef = collection(db, 'tweets');
-   const userRef = collection(db, "users"); 
+   // const userRef = collection(db, "users"); 
 
    const [tweet, setTweet] = useState('');
    const user = getAuth().currentUser;
@@ -18,7 +16,7 @@ const TweetBox = ({getTweets}) => {
       e.preventDefault();
 
       if(user != null) {
-         if(tweet != "") {
+         if(tweet !== "") {
             Create();
             setTweet("");
             getTweets();
@@ -32,11 +30,7 @@ const TweetBox = ({getTweets}) => {
 
       try {
 
-         const q = query(userRef, where("uid", "==", user.uid));
-         const snap = doc(q);
-         
-
-         console.log(snap);
+         //getUserdetails();
 
       }catch (e) {
          console.log(e);
@@ -60,6 +54,10 @@ const TweetBox = ({getTweets}) => {
          console.error(e);
       }
    }
+
+   useEffect(()=> {
+      getUserDetails("nDIuQI94i5gGvEohEbVtrFhNplR2");
+   }, [])
 
 
    return (
