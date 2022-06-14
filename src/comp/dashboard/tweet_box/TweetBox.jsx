@@ -6,36 +6,51 @@ import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import Dashboard from "../Dashboard";
 
-const TweetBox = () => {
+const TweetBox = ({getTweets}) => {
 
    const dbRef = collection(db, 'tweets');
    const userRef = collection(db, "users"); 
 
    const [tweet, setTweet] = useState('');
-   
    const user = getAuth().currentUser;
 
    const HandleSubmit = (e) => {
-      console.log("handle submit");
       e.preventDefault();
 
       if(user != null) {
          if(tweet != "") {
             Create();
             setTweet("");
+            getTweets();
          }
          else {alert("msg cannot be NULL");}
       }else {alert("user cannot be NULL");}
    }
 
    const Create = async() => {  
-          
+      const username = user.email.split('@');
+
+      try {
+
+         const q = query(userRef, where("uid", "==", user.uid));
+         const snap = doc(q);
+         
+
+         console.log(snap);
+
+      }catch (e) {
+         console.log(e);
+         alert(e.message);
+      }
+   
+      
+      
       try {
          const time = new Date();
          await addDoc(dbRef, {
             message: tweet,
             tweet_uid: user.uid,
-            // tweet_user: getUserDetails(user.uid),
+            tweet_user: username[0],
             created_at: time,
          });
          

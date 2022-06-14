@@ -93,12 +93,6 @@ const registerEmailPassword = async (name, email, password) => {
    }
 }
 
-// const getUserDetails = async (uid) => {
-//    const q = query(dbRef, where("uid", "==", uid));
-//    const doc = await getDoc(q);
-//    return doc.displayName;
-// }
-
 const sendPassReset = async (email) => {
    try {
       await sendPasswordResetEmail(email);

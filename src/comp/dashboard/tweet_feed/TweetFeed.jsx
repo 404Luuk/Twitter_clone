@@ -6,30 +6,29 @@ import Tweet from "./tweet/Tweet";
 import './Tweet_feed.scss'
 
 
-const TweetFeed = () => {
+const TweetFeed = ({Tweets}) => {
 
    const tweetRef = collection(db, "tweets");
    const userRef  = collection(db, "users");
 
-   const [Tweets, setTweets] = useState([]);
-   const [username, setUsername] = useState("");
+   // const [Tweets, setTweets] = useState([]);
 
 
-   const getTweets = async () => {
-      try {
-         const tweetCollection = await getDocs(tweetRef);
-         setTweets(tweetCollection.docs.map((doc)=>({ ...doc.data(), id: doc.id})));
-      }
-      catch(e) {
-         alert(e.message);
-         console.error(e);
-      }
-   }
+   // const getTweets = async () => {
+   //    try {
+   //       const tweetCollection = await getDocs(tweetRef);
+   //       setTweets(tweetCollection.docs.map((doc)=>({ ...doc.data(), id: doc.id})));
+   //    }
+   //    catch(e) {
+   //       alert(e.message);
+   //       console.error(e);
+   //    }
+   // }
 
 
-   useEffect(()=> {
-      getTweets();
-   },[Tweets])
+   // useEffect(()=> {
+   //    getTweets();
+   // },[])
 
 
    return (
