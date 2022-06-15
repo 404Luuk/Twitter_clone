@@ -5,21 +5,12 @@ import { useAuthState} from "react-firebase-hooks/auth";
 import './Layout.scss'
 import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
-import styled , {css}from "styled-components";
 
 const Layout = () => {
 
    const nav = useNavigate();
 
    const [user] = useAuthState(auth);
-
-   const Button = styled.button`
-      padding: 10px 8px;
-      border 1px solid black;
-      background-color: rgb(0,0,0,00);
-      font-size: 18px;
-      text-decoration: none;
-   `
 
    const SignOut = () => {
 
@@ -36,17 +27,18 @@ const Layout = () => {
    return (
       <>
          <nav>
-            <h1>Cursed_Twitter</h1>
-            
+            <h1>Cursed_twitter</h1>
+
             <div className="auth_tab">
                { user ? (
                   <>
-                     <Button onClick={()=>SignOut()}>Sign out</Button>
+                     <button><Link to="profile">Edit profile</Link></button>
+                     <button onClick={()=>SignOut()}>Sign out</button>
                   </>
                ):(
                   <>
-                     <Button><Link to="register">Register</Link></Button> <span></span>
-                     <Button><Link to="login">Login</Link></Button>
+                     <button><Link to="register">Register</Link></button> 
+                     <button><Link to="login">Login</Link></button>
                   </>
                )}
             </div>
@@ -55,6 +47,9 @@ const Layout = () => {
                { user ? (
                   <>
                     <span>Loggedin as:<br/> <strong>{user.email}</strong></span><br />
+                    <div className="user_img">
+                     <img src={user.photoURL} alt="user_img" />
+                    </div>
                   </>
                ):(<strong>Not logged in</strong>)}
             </div>

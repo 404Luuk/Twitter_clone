@@ -1,20 +1,40 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import { upload } from "../../firebase_config";
+import { getAuth } from "firebase/auth";
+import "./Profile.scss";
 
 const Profile = () => {
 
-    const user = useAuth().currentUser;
-    const [photoURL, setPhotoURL] = useState("https://firebasestorage.googleapis.com/v0/b/twitter-clone-5b244.appspot.com/o/images%2F45km-auto-Canta-LX1.jpg?alt=media&token=26e0c4df-ac13-4f7e-a03b-4fd88c1694f3");
-
-    const handleChange = (e) => {
-        e.target.files[0];
-
-        
-    }
-
-    return (
-        <></>
-    )
+   const currentUser = getAuth().currentUser;
+   const [photo, setPhoto] = useState(null);
+   const [loading, setLoading] = useState(false);
+   const [photoURL, setPhotoURL] = useState("https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png");
+ 
+   function handleChange(e) {
+     if (e.target.files[0]) {
+       setPhoto(e.target.files[0])
+     }
+   }
+ 
+   function handleClick() {
+     upload(photo, currentUser, setLoading);
+   }
+ 
+   useEffect(() => {
+     if (currentUser?.photoURL) {
+       setPhotoURL(currentUser.photoURL);
+     }
+   }, [currentUser])
+ 
+   return (
+     <div className="container">
+      <div className="profile"> <br />
+         <input type="file" onChange={handleChange} />
+         <button disabled={loading || !photo} onClick={handleClick}>Upload</button> <br /><br />
+         <img src={photoURL} alt="Avatar" className="avatar" />
+       </div>
+     </div>
+   );
 }
 
 

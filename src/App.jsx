@@ -6,6 +6,7 @@ import Dashboard from './comp/dashboard/Dashboard';
 import Register from './comp/register/Register';
 import Layout from './comp/layout/Layout';
 import Reset from './comp/reset/Reset';
+import Profile from './comp/profile/Profile';
 
 function App() {
 
@@ -19,6 +20,7 @@ function App() {
                <Route path="login" element={<Login />} />
                <Route path='register' element={<Register/>} /> 
                <Route path='reset' element={<Reset/>} />
+               <Route path='profile' element={<Profile />} />
             </Route>
          </Routes>
 

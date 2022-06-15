@@ -11,32 +11,34 @@ const TweetBox = ({getTweets}) => {
    const userRef = collection(db, "users"); 
 
    const [tweet, setTweet] = useState('');
-   const [userRec, setUserRec] = useState([]);
+   // const [userRec, setUserRec] = useState([]);
 
    const auth = getAuth();
    const user = auth.currentUser;
 
+   //Fetch user details when user obj is loaded
+   // onAuthStateChanged(auth, (user)=> {
+   //    if(user) {
+   //       if(userRec.length == 0 ) {
+   //          getUserDetails(user.uid);
+   //          console.log("Fetched user details");
+   //       }
+   //    }
+   // })
 
-   onAuthStateChanged(auth, (user)=> {
-      if(user) {
-         getUserDetails(user.uid);
-      }
-   })
+   // const getUserDetails = async(uid) => {
+   //    try {
+   //       const q = query(userRef, where("uid", "==", uid));
+   //       const res = await getDocs(q);
+   //       const userDoc = doc(userRef, res.docs[0].id);
+   //       const docSnap = await getDoc(userDoc);
 
-   // fix trigger
-   const getUserDetails = async(uid) => {
-      try {
-         const q = query(userRef, where("uid", "==", uid));
-         const res = await getDocs(q);
-         const userDoc = doc(userRef, res.docs[0].id);
-         const docSnap = await getDoc(userDoc);
-
-         setUserRec(docSnap.data());
+   //       setUserRec(docSnap.data());
          
-      }catch(e) {
-         console.log(e)
-      }
-   }
+   //    }catch(e) {
+   //       console.log(e)
+   //    }
+   // }
 
    const HandleSubmit = (e) => {
       e.preventDefault();
@@ -59,7 +61,8 @@ const TweetBox = ({getTweets}) => {
          await addDoc(dbRef, {
             message: tweet,
             tweet_uid: user.uid,
-            tweet_user: userRec.displayName,
+            tweet_user: user.displayName,
+            user_img: user.photoURL,
             created_at: time,
          });
          
