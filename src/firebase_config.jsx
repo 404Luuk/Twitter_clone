@@ -3,6 +3,7 @@ import { getFirestore, query, getDocs, collection, where, addDoc, getDoc , doc} 
 import { GoogleAuthProvider, getAuth, signInWithPopup, signInWithEmailAndPassword, createUserWithEmailAndPassword, sendPasswordResetEmail, signOut, onAuthStateChanged } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
+import { getStorage, ref, uploadBytes } from "firebase/storage";
 
 const firebaseConfig = {
    apiKey: "AIzaSyCEKWjmNkv75rIVWxCxNl0KK_rdvvpmogY",
@@ -19,6 +20,7 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const db = getFirestore(app);
+const storage = getStorage()
 
 const dbRef = collection(db, "users");
 const googleProvider = new GoogleAuthProvider();
@@ -84,7 +86,6 @@ const registerEmailPassword = async (name, email, password) => {
    }
 }
 
-
 const sendPassReset = async (email) => {
    try {
       await sendPasswordResetEmail(email);
@@ -100,6 +101,21 @@ const logOut = () => {
 }
 
 
+
+//storage
+const upload = async(file, currentUser, setLoading) => {
+
+   const fileRef = ref(storage,"images/"+currentUser.uid+".png");
+   
+   setLoading(true);
+   const snapshot = await uploadBytes(fileRef, file);
+
+   setLoading(false);
+   alert("File uploaded.");
+}
+
+
+
 export {
    auth,
    db,
@@ -108,4 +124,5 @@ export {
    registerEmailPassword,
    sendPassReset,
    logOut,
+   upload,
 };

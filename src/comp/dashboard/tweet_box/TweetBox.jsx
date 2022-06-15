@@ -1,5 +1,5 @@
 import React, {useState} from "react";
-import { getAuth } from "firebase/auth";
+import { getAuth, onAuthStateChanged } from "firebase/auth";
 import { auth, db } from "../../../firebase_config";
 import { addDoc, collection, getDoc, getDocs, query, where, doc } from "firebase/firestore";
 import { useEffect } from "react";
@@ -13,8 +13,16 @@ const TweetBox = ({getTweets}) => {
    const [tweet, setTweet] = useState('');
    const [userRec, setUserRec] = useState([]);
 
-   const user = getAuth().currentUser;
-  
+   const auth = getAuth();
+   const user = auth.currentUser;
+
+
+   onAuthStateChanged(auth, (user)=> {
+      if(user) {
+         getUserDetails(user.uid);
+      }
+   })
+
    // fix trigger
    const getUserDetails = async(uid) => {
       try {

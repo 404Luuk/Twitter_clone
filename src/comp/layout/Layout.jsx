@@ -64,7 +64,7 @@ const Layout = () => {
          <Outlet />
 
          <footer>
-            <p>Hiking app by Luuk</p>
+            <p>Twitter_clone by Luuk</p>
          </footer>
       </>
    )
