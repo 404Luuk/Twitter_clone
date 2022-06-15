@@ -1,11 +1,12 @@
 section {
-   min-height: 90vh;
+   // min-height: 90vh;
    
 }
 
 .row {
    display: flex;
    justify-content: center;
+   min-height: 85vh;
 
    .col {
       width: 60%;

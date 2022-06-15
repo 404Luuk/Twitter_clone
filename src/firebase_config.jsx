@@ -90,11 +90,9 @@ const getUserDetails = async(uid) => {
    try {
 
       const q = query(dbRef, where("uid", "==", uid));
-      const ref = await getDocs(q);
-      
-      const docid = ref.map((r)=> {return r.id})
-
-      console.log(docid[0]);
+      const ref = getDocs(q);
+   
+      console.log(ref.doc);
 
    }catch(e) {
       console.log(e)
