@@ -1,16 +1,34 @@
 import React, {useState} from "react";
 import { getAuth } from "firebase/auth";
-import { db, getUserDetails } from "../../../firebase_config";
-import { addDoc, collection, getDoc, getDocs, query, where } from "firebase/firestore";
+import { auth, db } from "../../../firebase_config";
+import { addDoc, collection, getDoc, getDocs, query, where, doc } from "firebase/firestore";
 import { useEffect } from "react";
+import { useAuthState } from "react-firebase-hooks/auth";
 
 const TweetBox = ({getTweets}) => {
 
    const dbRef = collection(db, 'tweets');
-   // const userRef = collection(db, "users"); 
+   const userRef = collection(db, "users"); 
 
    const [tweet, setTweet] = useState('');
+   const [userRec, setUserRec] = useState([]);
+
    const user = getAuth().currentUser;
+  
+   // fix trigger
+   const getUserDetails = async(uid) => {
+      try {
+         const q = query(userRef, where("uid", "==", uid));
+         const res = await getDocs(q);
+         const userDoc = doc(userRef, res.docs[0].id);
+         const docSnap = await getDoc(userDoc);
+
+         setUserRec(docSnap.data());
+         
+      }catch(e) {
+         console.log(e)
+      }
+   }
 
    const HandleSubmit = (e) => {
       e.preventDefault();
@@ -26,25 +44,14 @@ const TweetBox = ({getTweets}) => {
    }
 
    const Create = async() => {  
-      const username = user.email.split('@');
-
-      try {
-
-         //getUserdetails();
-
-      }catch (e) {
-         console.log(e);
-         alert(e.message);
-      }
-   
-      
-      
+      // const username = user.email.split('@');
+    
       try {
          const time = new Date();
          await addDoc(dbRef, {
             message: tweet,
             tweet_uid: user.uid,
-            tweet_user: username[0],
+            tweet_user: userRec.displayName,
             created_at: time,
          });
          
@@ -54,10 +61,6 @@ const TweetBox = ({getTweets}) => {
          console.error(e);
       }
    }
-
-   useEffect(()=> {
-      getUserDetails("nDIuQI94i5gGvEohEbVtrFhNplR2");
-   }, [])
 
 
    return (

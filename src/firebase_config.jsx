@@ -2,6 +2,7 @@ import { initializeApp } from "firebase/app";
 import { getFirestore, query, getDocs, collection, where, addDoc, getDoc , doc} from "firebase/firestore";
 import { GoogleAuthProvider, getAuth, signInWithPopup, signInWithEmailAndPassword, createUserWithEmailAndPassword, sendPasswordResetEmail, signOut, onAuthStateChanged } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
+import { useState } from "react";
 
 const firebaseConfig = {
    apiKey: "AIzaSyCEKWjmNkv75rIVWxCxNl0KK_rdvvpmogY",
@@ -83,23 +84,6 @@ const registerEmailPassword = async (name, email, password) => {
    }
 }
 
-const getUserDetails = async(uid) => {
-
-   
-
-   try {
-
-      const q = query(dbRef, where("uid", "==", uid));
-      const ref = getDocs(q);
-   
-      console.log(ref.doc);
-
-   }catch(e) {
-      console.log(e)
-   }
-
-}
-
 
 const sendPassReset = async (email) => {
    try {
@@ -122,7 +106,6 @@ export {
    signInWithGoogle,
    logInEmailPassword,
    registerEmailPassword,
-   getUserDetails,
    sendPassReset,
    logOut,
 };
