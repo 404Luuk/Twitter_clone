@@ -34,7 +34,6 @@ const Dashboard = () => {
          <div className="col">
             <div className="row">
                <div className="col">
-                  <h2>Welcome to Twitter2.0</h2>
                   <TweetBox getTweets={getTweets} />
                </div>
                <div className="col">

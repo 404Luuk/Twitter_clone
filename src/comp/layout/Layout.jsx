@@ -46,10 +46,13 @@ const Layout = () => {
             <div className="cur_user">
                { user ? (
                   <>
-                    <span>Loggedin as:<br/> <strong>{user.email}</strong></span><br />
-                    <div className="user_img">
+                  <div className="user_data">
+                     <strong>{user.displayName}</strong> <br />
+                     <span>{user.email}</span>
+                  </div>
+                  <div className="user_img">
                      <img src={user.photoURL} alt="user_img" />
-                    </div>
+                  </div>
                   </>
                ):(<strong>Not logged in</strong>)}
             </div>

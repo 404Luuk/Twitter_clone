@@ -65,11 +65,13 @@ const logInEmailPassword = async (email, password) => {
    }
 }
 
-const registerEmailPassword = async (name, email, password) => {
+const registerEmailPassword = async (name, email, password, photo, setLoading) => {
    try {
       //creates new user & adds info to doc
       const res = await createUserWithEmailAndPassword(auth, email, password);
       const user = res.user;
+      
+      await upload(photo, user, setLoading);
 
       let date = new Date();
       await addDoc(dbRef, {
@@ -80,7 +82,7 @@ const registerEmailPassword = async (name, email, password) => {
          email,
       }).then(()=> {
          updateProfile(user, {
-            displayName: name
+            displayName: name,
          })
       })
       
@@ -120,7 +122,6 @@ const upload = async(file, currentUser, setLoading) => {
    updateProfile(currentUser, {photoURL})
 
    setLoading(false);
-   alert("File uploaded.");
 }
 
 

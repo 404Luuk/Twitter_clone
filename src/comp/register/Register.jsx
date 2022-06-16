@@ -1,4 +1,6 @@
+import { upload } from "@testing-library/user-event/dist/upload";
 import React, { useState } from "react";
+import { useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import {
   auth,
@@ -14,9 +16,9 @@ function Register() {
   const [password, setPassword] = useState("");
   const [confirm, setConfirm] = useState("");
   const [name, setName] = useState("");
-//   const [user, loading, error] = useAuthState(auth);
+  const [photo, setPhoto] = useState(null);
+  const [loading, setLoading] = useState(false);
   const nav = useNavigate();
-//   const history = useHistory();
   
   const ValidatePass = () => {
    let isValid = true;
@@ -34,16 +36,19 @@ function Register() {
    if(ValidatePass()) 
    {
       if (!name) alert("Please enter name");
-      registerEmailPassword(name, email, password)
+      registerEmailPassword(name, email, password, photo, setLoading)
       .then(() => {
-         logInEmailPassword(email, password);
-         nav('/');
+          logInEmailPassword(email, password);
+          nav('/');
       })  
    }
    else {alert("password does not match");}
     
   };
   
+  useEffect(()=> {
+    console.log(photo);
+  }, [photo])
   
   return (
     <div className="register">
@@ -76,6 +81,12 @@ function Register() {
          onChange={(e) => setConfirm(e.target.value)}
          placeholder="confirm password"
         />
+        <span>Upload profile image</span> <br />
+        <input 
+          type="file" 
+          className="register_textBox"
+          onChange={(e) => setPhoto(e.target.files[0])}
+        /> <br />
         <button className="register__btn" onClick={register}>
           Register
         </button>

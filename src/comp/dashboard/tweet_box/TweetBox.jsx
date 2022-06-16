@@ -4,6 +4,7 @@ import { auth, db } from "../../../firebase_config";
 import { addDoc, collection, getDoc, getDocs, query, where, doc } from "firebase/firestore";
 import { useEffect } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
+import "./Tweet_box.scss"
 
 const TweetBox = ({getTweets}) => {
 
@@ -13,6 +14,7 @@ const TweetBox = ({getTweets}) => {
    const [tweet, setTweet] = useState('');
    // const [userRec, setUserRec] = useState([]);
 
+   const [loading, setLoading] = useState(false);
    const auth = getAuth();
    const user = auth.currentUser;
 
@@ -77,14 +79,16 @@ const TweetBox = ({getTweets}) => {
    return (
       <div className="tweet_box">
          <form onSubmit={(e)=>HandleSubmit(e)} >
-            <label htmlFor="tweet">Whats on your mind?</label> <br />
-            <input
+            <strong htmlFor="tweet">Whats on your mind?</strong> <br /> <br />
+            <textarea
                id="tweet"
-               type="text"
+               type=""
                value={tweet}
                onChange={(e)=>setTweet(e.target.value)}
                required
-            />
+               rows="4" cols="40"
+               placeholder="Enter tweet.."
+            />  <br /> <br />
             <button type="submit">Tweet!</button> 
          </form>
       </div>
