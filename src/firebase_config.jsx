@@ -1,8 +1,6 @@
 import { initializeApp } from "firebase/app";
 import { getFirestore, query, getDocs, collection, where, addDoc, getDoc , doc} from "firebase/firestore";
 import { GoogleAuthProvider, getAuth, signInWithPopup, signInWithEmailAndPassword, createUserWithEmailAndPassword, sendPasswordResetEmail, signOut, onAuthStateChanged, updateProfile } from "firebase/auth";
-import { useNavigate } from "react-router-dom";
-import { useState } from "react";
 import { getDownloadURL, getStorage, ref, uploadBytes } from "firebase/storage";
 
 const firebaseConfig = {
@@ -13,7 +11,7 @@ const firebaseConfig = {
    messagingSenderId: "281041947016",
    appId: "1:281041947016:web:ae824f0df50cc040ed523d",
    measurementId: "G-3C9SRHEZRX"
- };
+};
  
 
 // Initialize Firebase
@@ -28,11 +26,13 @@ const googleProvider = new GoogleAuthProvider();
 
 // FIREBASE AUTH FUNCTIONS BELOW //
 
+//Login with google, if user is null, create new record and user
 const signInWithGoogle = async () => {
    try {
       //open google signin window
       const result = await signInWithPopup(auth, googleProvider);
       const user = result.user;
+
       const q = query(dbRef, where("uid", "==", user.uid));
       const docs = await getDocs(q);
 
@@ -40,6 +40,7 @@ const signInWithGoogle = async () => {
       if(docs.docs.length === 0) 
       {
          let date = new Date();
+
          await addDoc(dbRef, {
             signUpDate: date,
             uid: user.uid,
@@ -55,16 +56,19 @@ const signInWithGoogle = async () => {
    }
 }
 
+//Login with email, pass
 const logInEmailPassword = async (email, password) => {
    try {
       //Try login with credentials
       await signInWithEmailAndPassword(auth, email, password);
+
    } catch(err) {
       console.log(err);
       alert(err.message);
    }
 }
 
+//register with email, pass && add user_img
 const registerEmailPassword = async (name, email, password, photo, setLoading) => {
    try {
       //creates new user & adds info to doc
@@ -74,6 +78,7 @@ const registerEmailPassword = async (name, email, password, photo, setLoading) =
       await upload(photo, user, setLoading);
 
       let date = new Date();
+
       await addDoc(dbRef, {
          signUpDate: date,
          uid: user.uid,
@@ -92,11 +97,12 @@ const registerEmailPassword = async (name, email, password, photo, setLoading) =
    }
 }
 
-
+//send reset link to email
 const sendPassReset = async (email) => {
    try {
       await sendPasswordResetEmail(email);
       alert("If email exists link has been sent");
+
    } catch(err) {
       alert(err.message);
       console.error(err);
@@ -104,12 +110,13 @@ const sendPassReset = async (email) => {
 }
 
 const logOut = () => {
+
    signOut(auth);
 }
 
+// STORAGE //
 
-
-//storage
+//upload user_img to fireStore && update user auth obj
 const upload = async(file, currentUser, setLoading) => {
 
    const fileRef = ref(storage , "images/"+currentUser.uid);
@@ -123,8 +130,6 @@ const upload = async(file, currentUser, setLoading) => {
 
    setLoading(false);
 }
-
-
 
 export {
    auth,

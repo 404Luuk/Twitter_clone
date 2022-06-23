@@ -47,11 +47,11 @@ const Layout = () => {
                { user ? (
                   <>
                   <div className="user_data">
-                     <strong>{user.displayName}</strong> <br />
-                     <span>{user.email}</span>
+                     <strong>{user?.displayName}</strong> <br />
+                     <span>{user?.email}</span>
                   </div>
                   <div className="user_img">
-                     <img src={user.photoURL} alt="user_img" />
+                     <img src={user?.photoURL} alt="user_img" />
                   </div>
                   </>
                ):(<strong>Not logged in</strong>)}

@@ -46,10 +46,6 @@ function Register() {
     
   };
   
-  useEffect(()=> {
-    console.log(photo);
-  }, [photo])
-  
   return (
     <div className="register">
       <div className="register__container">

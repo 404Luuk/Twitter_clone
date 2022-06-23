@@ -9,12 +9,9 @@ import "./Tweet_box.scss"
 const TweetBox = ({getTweets}) => {
 
    const dbRef = collection(db, 'tweets');
-   const userRef = collection(db, "users"); 
 
    const [tweet, setTweet] = useState('');
-   // const [userRec, setUserRec] = useState([]);
 
-   const [loading, setLoading] = useState(false);
    const auth = getAuth();
    const user = auth.currentUser;
 
@@ -56,7 +53,6 @@ const TweetBox = ({getTweets}) => {
    }
 
    const Create = async() => {  
-      // const username = user.email.split('@');
     
       try {
          const time = new Date();
