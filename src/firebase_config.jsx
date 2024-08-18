@@ -3,15 +3,7 @@ import { getFirestore, query, getDocs, collection, where, addDoc, getDoc , doc} 
 import { GoogleAuthProvider, getAuth, signInWithPopup, signInWithEmailAndPassword, createUserWithEmailAndPassword, sendPasswordResetEmail, signOut, onAuthStateChanged, updateProfile } from "firebase/auth";
 import { getDownloadURL, getStorage, ref, uploadBytes } from "firebase/storage";
 
-const firebaseConfig = {
-   apiKey: "AIzaSyCEKWjmNkv75rIVWxCxNl0KK_rdvvpmogY",
-   authDomain: "twitter-clone-5b244.firebaseapp.com",
-   projectId: "twitter-clone-5b244",
-   storageBucket: "twitter-clone-5b244.appspot.com",
-   messagingSenderId: "281041947016",
-   appId: "1:281041947016:web:ae824f0df50cc040ed523d",
-   measurementId: "G-3C9SRHEZRX"
-};
+const firebaseConfig = {};
  
 
 // Initialize Firebase
